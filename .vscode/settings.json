@@ -1,0 +1,17 @@
+{
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintArgs": [
+        "--load-plugins=pylint_django",
+        "--django-settings-module=librogram.settings",
+    ],
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "LIbrogram db",
+            "database": "db.sqlite3"
+        }
+    ]
+    
+}

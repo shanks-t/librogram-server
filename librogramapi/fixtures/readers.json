@@ -1,0 +1,12 @@
+[
+    {
+        "model": "librogramapi.reader",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "bio": "i'm all about serving the dark lord and shit",
+            "profile_image_url": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F736x%2F7a%2F23%2Fd3%2F7a23d3aa140b701c59abb9348f32d49d.jpg&f=1&nofb=1",
+            "critic": true
+        }
+    }
+]
