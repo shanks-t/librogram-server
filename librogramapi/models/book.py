@@ -3,10 +3,13 @@ from librogramapi.models.tag import Tag
 
 class Book(models.Model):
 
-    title = models.CharField(max_length=60)
+    title = models.CharField(max_length=100)
+    subtitle = models.CharField(max_length=60)
     author = models.CharField(max_length=60)
-    description = models.TextField(max_length=160)
-    num_of_pages = models.IntegerField()
+    image_path = models.URLField()
+    description = models.TextField()
+    page_count = models.IntegerField()
+    publisher = models.CharField(max_length=60)
     date_published = models.DateField()
     tags = models.ManyToManyField(Tag)
 
