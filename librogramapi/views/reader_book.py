@@ -1,27 +1,33 @@
-from django.core.exceptions import ValidationError
 from rest_framework import status
-from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
-from librogramapi.models import Book, Comment
 
-class BookView(ViewSet):
+from django.http import HttpResponseServerError
+from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
+
+from librogramapi.models import Book, Reader, ReaderBook, Status
+
+class ReaderBookView(ViewSet):
     """ Rare Categories """
     
     def create(self, request):
+        reader = Reader.objects.get(user=request.auth.user)
+        book = Book.objects.get(pk=request.data['book'])        
+        status = Status.objects.get(pk=request.data['status'])
 
         try:
-            book = Book.objects.create(
-                title=request.data["title"],
-                author=request.data["author"],
-                image_path=request.data["imagePath"],
-                description=request.data["description"],
-                page_count=request.data["pageCount"],
-                publisher=request.data["publisher"],
-                date_published=request.data["datePublished"],
+            reader_book = ReaderBook.objects.create(
+                book = book,
+                reader = reader,
+                rating=request.data["rating"],
+                review=request.data["review"],
+                checkout_date=request.data["checkoutDate"],
+                status = status
+
             )
-            serializer = BookSerializer(book, context={'request': request})
+            serializer = BookSerializer(reader_book, context={'request': request})
             return Response(serializer.data)
         
         except ValidationError as ex:

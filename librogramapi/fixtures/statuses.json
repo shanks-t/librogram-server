@@ -1,25 +1,25 @@
 [
     {
-        "model": "librogramapi.tag",
+        "model": "librogramapi.status",
         "pk": 1,
         "fields": {
-            "label": "philosophy"
+            "label": "unread"
             
         }
     },
     {
-        "model": "librogramapi.tag",
+        "model": "librogramapi.status",
         "pk": 2,
         "fields": {
-            "label": "fiction"
+            "label": "in progress"
             
         }
     },
     {
-        "model": "librogramapi.tag",
+        "model": "librogramapi.status",
         "pk": 3,
         "fields": {
-            "label": "science"
+            "label": "finished"
             
         }
     }

@@ -21,15 +21,14 @@ from django.urls import path
 from rest_framework import routers
 # from librogramapi.models import Reader
 from librogramapi.views import register_user, login_user
-from librogramapi.views.book import BookView
-from librogramapi.views.reader import ReaderView
-from librogramapi.views.tag import TagView
+from librogramapi.views import BookView, ReaderView, TagView, CommentView
+
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'books', BookView, 'book')
 router.register(r'readers', ReaderView, 'reader')
 router.register(r'tags', TagView, 'post')
-# router.register(r'comments', CommentView, 'comments')
+router.register(r'comments', CommentView, 'comments')
 # router.register(r'authors', AuthorView, 'reader')
 
 urlpatterns = [

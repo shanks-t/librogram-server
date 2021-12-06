@@ -1,0 +1,37 @@
+[
+    {
+        "model": "librogramapi.comment",
+        "pk": 1,
+        "fields": {
+            "book": 1,
+            "reader": 1,
+            "comment": "good",
+            "created_on": "2021-11-06"
+            
+        }
+    },
+    {
+        "model": "librogramapi.comment",
+        "pk": 2,
+        "fields": {
+            "book": 1,
+            "reader": 1,
+            "comment": "great",
+            "created_on": "2021-11-06"
+            
+        }
+    },
+    {
+        "model": "librogramapi.comment",
+        "pk": 3,
+        "fields": {
+            "book": 1,
+            "reader": 2,
+            "comment": "rivetting",
+            "created_on": "2021-11-06"
+            
+        }
+    }
+
+]
+
