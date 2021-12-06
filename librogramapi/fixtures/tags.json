@@ -1,0 +1,27 @@
+[
+    {
+        "model": "librogramapi.tag",
+        "pk": 1,
+        "fields": {
+            "label": "unread"
+            
+        }
+    },
+    {
+        "model": "librogramapi.tag",
+        "pk": 2,
+        "fields": {
+            "label": "in progress"
+            
+        }
+    },
+    {
+        "model": "librogramapi.tag",
+        "pk": 3,
+        "fields": {
+            "label": "finished"
+            
+        }
+    }
+]
+

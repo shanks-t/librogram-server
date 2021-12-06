@@ -62,7 +62,6 @@ def register_user(request):
     """
     reader = Reader.objects.create(
         bio=request.data['bio'],
-        created_on=request.data['created_on'],
         profile_image_url=request.data['profile_image_url'],
         subscriber=request.data['subscriber'],
         user=new_user
