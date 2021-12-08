@@ -30,7 +30,6 @@ router.register(r'readers', ReaderView, 'reader')
 router.register(r'tags', TagView, 'post')
 router.register(r'comments', CommentView, 'comments')
 router.register(r'userbooks', UserBookView, 'userbook')
-router.register(r'userbooks', UserBookView, 'userbook')
 
 urlpatterns = [
     path('', include(router.urls)),
