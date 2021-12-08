@@ -14,8 +14,7 @@ from librogramapi.models import  Reader
 
 class ReaderView(ViewSet):
 
-
-    @action(methods=['get'], detail=False)
+    @action(methods=['GET'], detail=False)
     def currentuser(self, request):
         """"""
         reader = Reader.objects.get(user=request.auth.user)
