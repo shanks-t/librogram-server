@@ -3,3 +3,4 @@ from .book import BookView
 from .tag import TagView
 from .comment import CommentView
 from .reader import ReaderView
+from .user_book import UserBookView

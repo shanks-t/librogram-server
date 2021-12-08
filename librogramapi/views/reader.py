@@ -28,14 +28,12 @@ class ReaderView(ViewSet):
             )
 
 class UserSerializer(serializers.ModelSerializer):
-    """JSON serializer for users on authors on posts"""
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'username', 'is_staff', )
+        fields = ('id', 'first_name', 'last_name', 'username', 'is_staff' )
 
 class ReaderSerializer(serializers.ModelSerializer):
-    """JSON serializer for authors on posts"""
     user = UserSerializer()
     class Meta:
         model = Reader
-        fields = ('id', 'user', 'bio', 'subscriber')
+        fields = ('user', 'bio', 'subscriber')

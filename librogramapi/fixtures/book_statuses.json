@@ -1,0 +1,15 @@
+[
+    {
+        "model": "librogramapi.bookstatus",
+        "pk": 1,
+        "fields": {
+            "user_book": 1,
+            "user": 1,
+            "status": 2,
+            "current_page": 48,
+            "start_date": "2021-11-02",
+            "finish_date": "2021-12-02"
+            
+        }
+    }
+]

@@ -1,10 +1,11 @@
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from rest_framework import status
 from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
-from librogramapi.models import Book, Comment
+from librogramapi.models import Book, Comment, Reader
 
 class BookView(ViewSet):
     """ Rare Categories """

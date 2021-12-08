@@ -1,6 +1,6 @@
 from .book import Book
 from .comment import Comment
-from .reader_book import ReaderBook
+from .user_book import UserBook
 from .reader import Reader
 from .book_tag import BookTag
 from .reading_goal import ReadingGoal
