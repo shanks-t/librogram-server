@@ -1,0 +1,17 @@
+[
+    {
+        "model": "librogramapi.book",
+        "pk": 1,
+        "fields": {
+            "title": "The Laughing Monsters",
+            "subtitle": "A Novel",
+            "author": "Denis Johnson",
+            "image_path": "http://books.google.com/books/content?id=lHGBAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+            "description": "Denis Johnson's New York Times bestseller, The Laughing Monsters, is a high-suspense tale of kaleidoscoping loyalties in the post-9/11 world that shows one of our great novelists at the top of his game. Roland Nair calls himself Scandinavian but travels on a U.S. passport. After ten years' absence, he returns to Freetown, Sierra Leone, to reunite with his friend Michael Adriko. They once made a lot of money here during the country's civil war, and, curious to see whether good luck will strike twice in the same place, Nair has allowed himself to be drawn back to a region he considers hopeless. Adriko is an African who styles himself a soldier of fortune and who claims to have served, at various times, the Ghanaian army, the Kuwaiti Emiri Guard, and the American Green Berets. He's probably broke now, but he remains, at thirty-six, as stirred by his own doubtful schemes as he was a decade ago. Although Nair believes some kind of money-making plan lies at the back of it all, Adriko's stated reason for inviting his friend to Freetown is for Nair to meet Adriko's fiancée, a grad student from Colorado named Davidia. Together the three set out to visit Adriko's clan in the Uganda-Congo borderland—but each of these travelers is keeping secrets from the others. Their journey through a land abandoned by the future leads Nair, Adriko, and Davidia to meet themselves not in a new light, but rather in a new darkness.",
+            "page_count": 240,
+            "publisher": "Farrar, Straus and Giroux",
+            "date_published": "2014-11-04"
+
+        }
+    }
+]

@@ -1,0 +1,23 @@
+[
+    {
+        "model": "librogramapi.status",
+        "pk": 1,
+        "fields": {
+            "label": "unread"
+        }
+    },
+    {
+        "model": "librogramapi.status",
+        "pk": 2,
+        "fields": {
+            "label": "in-progress"
+        }
+    },
+    {
+        "model": "librogramapi.status",
+        "pk": 3,
+        "fields": {
+            "label": "finished"
+        }
+    }
+]
