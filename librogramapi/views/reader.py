@@ -35,4 +35,4 @@ class ReaderSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = Reader
-        fields = ('user', 'bio', 'subscriber')
+        fields = ('user', 'bio', 'profile_image_url', 'subscriber')

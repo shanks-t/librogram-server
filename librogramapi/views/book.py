@@ -7,10 +7,9 @@ from rest_framework import status
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
-from librogramapi.models import Book, Comment, Reader
+from librogramapi.models import Book, Comment, UserBook
 
 class BookView(ViewSet):
-    """ Rare Categories """
     
     def create(self, request):
 
@@ -26,6 +25,10 @@ class BookView(ViewSet):
                 publisher=request.data["publisher"],
                 date_published=request.data["datePublished"],
             )
+            UserBook.objects.create(
+                user=user,
+                book=book
+            )
             serializer = BookSerializer(book, context={'request': request})
             return Response(serializer.data)
         
@@ -39,7 +42,6 @@ class BookView(ViewSet):
         )
         return Response(serializer.data)
 
-    #@action(methods=['GET'], detail=False)
     def get_query_set(self, request):
         queryset = Book.objects.all()
         username = self.request.query_params.get('username')

@@ -7,7 +7,7 @@ class UserBook(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey("Book", on_delete=models.CASCADE)
-    status = models.ForeignKey(Status, on_delete=models.CASCADE)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, null=True)
     rating = models.FloatField(null=True)
     review = models.TextField(null=True)
     start_date = models.DateField(null=True)
