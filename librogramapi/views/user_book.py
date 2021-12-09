@@ -17,17 +17,16 @@ class UserBookView(ViewSet):
         status = Status.objects.get(pk=request.data['status'])
 
         try:
-            reader_book = UserBook.objects.create(
-                book = book,
+            user_book = UserBook.objects.create(
+                user=user,
+                book=book,
                 status=status,
                 rating=request.data["rating"],
                 review=request.data["review"],
-                checkout_date=request.data["checkoutDate"],
                 start_date=request.data["startDate"],
                 current_page=request.data["currentPage"],
-                user = user
             )
-            serializer = UserBookSerializer(reader_book, context={'request': request})
+            serializer = UserBookSerializer(user_book, context={'request': request})
             return Response(serializer.data)
         
         except ValidationError as ex:

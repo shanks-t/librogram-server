@@ -12,8 +12,10 @@ class BookView(ViewSet):
     
     def create(self, request):
 
+        user = User.objects.get(username=request.auth.user)
         try:
             book = Book.objects.create(
+                user=user,
                 title=request.data["title"],
                 author=request.data["author"],
                 image_path=request.data["imagePath"],
@@ -65,6 +67,11 @@ class BookView(ViewSet):
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('id', 'first_name', 'last_name', 'username', 'is_staff' )
 
 class CommentSerializer(serializers.ModelSerializer):
 

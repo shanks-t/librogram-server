@@ -21,13 +21,12 @@ from django.urls import path
 from rest_framework import routers
 # from librogramapi.models import Reader
 from librogramapi.views import register_user, login_user
-from librogramapi.views import BookView, ReaderView, TagView, CommentView, UserBookView
+from librogramapi.views import BookView, ReaderView, CommentView, UserBookView
 
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'books', BookView, 'book')
 router.register(r'readers', ReaderView, 'reader')
-router.register(r'tags', TagView, 'post')
 router.register(r'comments', CommentView, 'comments')
 router.register(r'userbooks', UserBookView, 'userbook')
 
