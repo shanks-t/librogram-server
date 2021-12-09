@@ -16,7 +16,7 @@ class ReaderView(ViewSet):
 
     @action(methods=['GET'], detail=False)
     def currentuser(self, request):
-        """"""
+
         reader = Reader.objects.get(user=request.auth.user)
         try:
             serializer = ReaderSerializer(reader, many=False)
