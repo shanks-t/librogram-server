@@ -44,12 +44,6 @@ class BookView(ViewSet):
         )
         return Response(serializer.data)
 
-    # def get_query_set(self, request):
-    #     queryset = Book.objects.all()
-    #     user = self.request.query_params.get('userId')
-    #     if user is not None:
-    #         queryset = queryset.filter(user__id=user)
-    #     return queryset
 
     def retrieve(self, request, pk=None):
         
