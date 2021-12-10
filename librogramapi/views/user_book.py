@@ -54,7 +54,7 @@ class UserBookView(ViewSet):
     @action(methods=['PATCH'], detail=True)
     def edit(self, request, pk=None):
 
-        user_book = UserBook.objects.get(pk=pk)
+        #user_book = UserBook.objects.get(pk=pk)
         user = User.objects.get(username=request.auth.user)
 
         try:
@@ -134,4 +134,4 @@ class UserBookSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = UserBook
-        fields = ('id', 'user', 'rating', 'review', 'start_date', 'current_page', 'status', 'book')
+        fields = ('id', 'user', 'rating', 'review', 'start_date', 'finish_date', 'current_page', 'status', 'book')

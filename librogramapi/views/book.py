@@ -36,18 +36,20 @@ class BookView(ViewSet):
             return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
 
     def list(self, request):
-        books = Book.objects.all()
+        user = request.auth.user
+        books = Book.objects.filter(user=user)
+
         serializer = BookSerializer(
             books, many=True, context={'request': request}
         )
         return Response(serializer.data)
 
-    def get_query_set(self, request):
-        queryset = Book.objects.all()
-        username = self.request.query_params.get('username')
-        if username is not None:
-            queryset = queryset.filter(user_username=username)
-        return queryset
+    # def get_query_set(self, request):
+    #     queryset = Book.objects.all()
+    #     user = self.request.query_params.get('userId')
+    #     if user is not None:
+    #         queryset = queryset.filter(user__id=user)
+    #     return queryset
 
     def retrieve(self, request, pk=None):
         
