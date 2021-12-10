@@ -40,8 +40,41 @@ class UserBookView(ViewSet):
             user_books, many=True, context={'request': request}
         )
         return Response(serializer.data)
+    
+    def retrieve(self, request, pk=None):
 
- 
+        try:
+            user_book = UserBook.objects.get(pk=pk)
+            serializer = UserBookSerializer(user_book, context={'request': request})
+            return Response(serializer.data)
+
+        except UserBook.DoesNotExist as ex:
+            return Response({'message': 'Book does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+    @action(methods=['PATCH'], detail=True)
+    def edit(self, request, pk=None):
+
+        user_book = UserBook.objects.get(pk=pk)
+        user = User.objects.get(username=request.auth.user)
+
+        try:
+
+            user_book = UserBook.objects.get(pk=pk)
+        except UserBook.DoesNotExist:
+            return Response(
+                {'message': 'UserBook does not exist.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        user_book.status = request.data.get('statusId', None)
+        user_book.rating = request.data.get('rating', None)
+        user_book.review = request.data.get('review', None)
+        user_book.start_date = request.data.get('startDate', None)
+        user_book.finish_date = request.data.get('finishDate', None)
+        user_book.current_page = request.data.get('currentPage', None)
+        user_book.save()
+
+        return Response({'message': 'yay'}, status=status.HTTP_200_OK)
 
     # def retrieve(self, request, pk=None):
 
@@ -101,4 +134,4 @@ class UserBookSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = UserBook
-        fields = ('id', 'user', 'rating', 'review', 'checkout_date', 'start_date', 'current_page', 'status', 'book')
+        fields = ('id', 'user', 'rating', 'review', 'start_date', 'current_page', 'status', 'book')
