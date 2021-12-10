@@ -42,10 +42,10 @@ class UserBookView(ViewSet):
         return Response(serializer.data)
 
     @action(methods=['PATCH'], detail=True)
-    def updateUserBook(self, request, pk=None):
+    def edit(self, request, pk=None):
 
         user_book = UserBook.objects.get(pk=pk)
-        user = User.objects.get(user=request.auth.user)
+        user = User.objects.get(username=request.auth.user)
 
 
         try:
