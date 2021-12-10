@@ -8,5 +8,5 @@ class Reader(models.Model):
     profile_image_url = models.URLField()
     subscriber = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.user.username
+    # def __str__(self):
+    #     return self.user
