@@ -47,7 +47,6 @@ class BookView(ViewSet):
 
     def retrieve(self, request, pk=None):
         
-
         try:
             book = Book.objects.get(pk=pk)
             serializer = BookSerializer(book, context={'request': request})
