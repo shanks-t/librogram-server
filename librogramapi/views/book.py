@@ -36,8 +36,7 @@ class BookView(ViewSet):
             return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
 
     def list(self, request):
-        user = request.auth.user
-        books = Book.objects.filter(user=user)
+        books = Book.objects.all()
 
         serializer = BookSerializer(
             books, many=True, context={'request': request}
