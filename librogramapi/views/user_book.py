@@ -2,6 +2,8 @@ from rest_framework import status
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
+from rest_framework.decorators import action
+
 
 from django.http import HttpResponseServerError
 from django.core.exceptions import ValidationError
@@ -17,17 +19,16 @@ class UserBookView(ViewSet):
         status = Status.objects.get(pk=request.data['status'])
 
         try:
-            reader_book = UserBook.objects.create(
-                book = book,
+            user_book = UserBook.objects.create(
+                user=user,
+                book=book,
                 status=status,
                 rating=request.data["rating"],
                 review=request.data["review"],
-                checkout_date=request.data["checkoutDate"],
                 start_date=request.data["startDate"],
                 current_page=request.data["currentPage"],
-                user = user
             )
-            serializer = UserBookSerializer(reader_book, context={'request': request})
+            serializer = UserBookSerializer(user_book, context={'request': request})
             return Response(serializer.data)
         
         except ValidationError as ex:
@@ -39,6 +40,8 @@ class UserBookView(ViewSet):
             user_books, many=True, context={'request': request}
         )
         return Response(serializer.data)
+
+ 
 
     # def retrieve(self, request, pk=None):
 

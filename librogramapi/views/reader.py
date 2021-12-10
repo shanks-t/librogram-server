@@ -16,7 +16,7 @@ class ReaderView(ViewSet):
 
     @action(methods=['GET'], detail=False)
     def currentuser(self, request):
-        """"""
+
         reader = Reader.objects.get(user=request.auth.user)
         try:
             serializer = ReaderSerializer(reader, many=False)
@@ -35,4 +35,4 @@ class ReaderSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = Reader
-        fields = ('user', 'bio', 'subscriber')
+        fields = ('user', 'bio', 'profile_image_url', 'subscriber')
