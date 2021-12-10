@@ -41,7 +41,34 @@ class UserBookView(ViewSet):
         )
         return Response(serializer.data)
 
- 
+    @action(methods=['PATCH'], detail=True)
+    def updateUserBook(self, request, pk=None):
+
+        user_book = UserBook.objects.get(pk=pk)
+        user = User.objects.get(user=request.auth.user)
+
+
+        try:
+
+            user_book = UserBook.objects.get(pk=pk)
+        except UserBook.DoesNotExist:
+            return Response(
+                {'message': 'Post does not exist.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if user == user_book.user:
+            try:
+                user_book.status = request.data['statusId']
+                user_book.rating = request.data['rating']
+                user_book.review = request.data['review']
+                user_book.start_date = request.data['startDate']
+                user_book.finish_date = request.data['finishDate']
+                user_book.current_page = request.data['currentPage']
+                user_book.save()
+                return Response({'you did it'}, status=status.HTTP_201_CREATED)
+            except Exception as ex:
+                return Response({'wrong user': ex.args[0]})
 
     # def retrieve(self, request, pk=None):
 
