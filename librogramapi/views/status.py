@@ -46,5 +46,5 @@ class StatusView(ViewSet):
 class StatusSerializer(serializers.ModelSerializer):
  
     class Meta:
-        model = Comment
-        fields = ( 'label', )
+        model = Status
+        fields = ( 'id', 'label', )
