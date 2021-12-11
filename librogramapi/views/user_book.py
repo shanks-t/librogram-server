@@ -35,7 +35,8 @@ class UserBookView(ViewSet):
             return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
 
     def list(self, request):
-        user_books = UserBook.objects.all()
+        user = request.auth.user
+        user_books = UserBook.objects.filter(user=user)
         serializer = UserBookSerializer(
             user_books, many=True, context={'request': request}
         )
@@ -54,9 +55,8 @@ class UserBookView(ViewSet):
     @action(methods=['PATCH'], detail=True)
     def edit(self, request, pk=None):
 
-        #user_book = UserBook.objects.get(pk=pk)
-        user = User.objects.get(username=request.auth.user)
-
+        statusId = request.data.get('statusId', None)
+        user_status = Status.objects.get(id=statusId)
         try:
 
             user_book = UserBook.objects.get(pk=pk)
@@ -66,7 +66,7 @@ class UserBookView(ViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        user_book.status = request.data.get('statusId', None)
+        user_book.status = user_status
         user_book.rating = request.data.get('rating', None)
         user_book.review = request.data.get('review', None)
         user_book.start_date = request.data.get('startDate', None)
