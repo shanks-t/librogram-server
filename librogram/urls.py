@@ -19,9 +19,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path
 from rest_framework import routers
-# from librogramapi.models import Reader
 from librogramapi.views import register_user, login_user
-from librogramapi.views import BookView, ReaderView, CommentView, UserBookView, StatusView
+from librogramapi.views import BookView, ReaderView, CommentView, UserBookView, StatusView, ReadingGoalView
 
 
 router = routers.DefaultRouter(trailing_slash=False)
@@ -30,6 +29,7 @@ router.register(r'readers', ReaderView, 'reader')
 router.register(r'comments', CommentView, 'comments')
 router.register(r'userbooks', UserBookView, 'userbook')
 router.register(r'statuses', StatusView, 'status')
+router.register(r'reading_goals', ReadingGoalView, 'status')
 
 urlpatterns = [
     path('', include(router.urls)),

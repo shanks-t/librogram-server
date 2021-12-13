@@ -1,0 +1,13 @@
+[
+    {
+        "model": "librogramapi.readinggoal",
+        "pk": 1,
+        "fields": {
+            "user": 9,
+            "number_of_books": 10,
+            "start_date": "2021-11-06",
+            "end_date": "2021-12-16"
+            
+        }
+    }
+]
