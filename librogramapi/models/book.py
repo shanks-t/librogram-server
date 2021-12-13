@@ -16,5 +16,5 @@ class Book(models.Model):
     checkout_date = models.DateField(auto_now=True)
     tags = models.ManyToManyField(Tag)
 
-    def __str__(self):
-        return self.title
+    # def __str__(self):
+    #     return self.title

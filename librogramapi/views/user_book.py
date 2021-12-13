@@ -114,4 +114,4 @@ class UserBookSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = UserBook
-        fields = ('id', 'user', 'rating', 'review', 'start_date', 'finish_date', 'current_page', 'status', 'book')
+        fields = ('id', 'user', 'rating', 'review', 'start_date', 'finish_date', 'current_page', 'status', 'book',)
