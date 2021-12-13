@@ -19,10 +19,10 @@ class ReadingGoalView(ViewSet):
         try:
             reading_goal = ReadingGoal.objects.create(
                 user=user,
-                number_of_pages=request.data["numberOfPages"],
-                number_of_books=request.data["numberOfBooks"],
-                start_date=request.data["startDate"],
-                end_date=request.data["endDate"],
+                number_of_pages=request.data.get("numberOfPages", None),
+                number_of_books=request.data.get("numberOfBooks", None),
+                start_date=request.data.get("startDate", None),
+                end_date=request.data.get("endDate", None),
             )
             serializer = ReadingGoalSerializer(reading_goal, context={'request': request})
             return Response(serializer.data)
