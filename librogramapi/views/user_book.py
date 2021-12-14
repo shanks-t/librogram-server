@@ -10,12 +10,14 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
 from librogramapi.models import Book, Reader, UserBook, Status
+from librogramapi.models.comment import Comment
+
 
 class UserBookView(ViewSet):
-    
+
     def create(self, request):
         user = User.objects.get(username=request.auth.user)
-        book = Book.objects.get(pk=request.data['book'])        
+        book = Book.objects.get(pk=request.data['book'])
         status = Status.objects.get(pk=request.data['status'])
 
         try:
@@ -28,9 +30,10 @@ class UserBookView(ViewSet):
                 start_date=request.data["startDate"],
                 current_page=request.data["currentPage"],
             )
-            serializer = UserBookSerializer(user_book, context={'request': request})
+            serializer = UserBookSerializer(
+                user_book, context={'request': request})
             return Response(serializer.data)
-        
+
         except ValidationError as ex:
             return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -41,12 +44,13 @@ class UserBookView(ViewSet):
             user_books, many=True, context={'request': request}
         )
         return Response(serializer.data)
-    
+
     def retrieve(self, request, pk=None):
 
         try:
             user_book = UserBook.objects.get(pk=pk)
-            serializer = UserBookSerializer(user_book, context={'request': request})
+            serializer = UserBookSerializer(
+                user_book, context={'request': request})
             return Response(serializer.data)
 
         except UserBook.DoesNotExist as ex:
@@ -76,15 +80,19 @@ class UserBookView(ViewSet):
 
         return Response({'message': 'yay'}, status=status.HTTP_200_OK)
 
-    # def retrieve(self, request, pk=None):
+    def destroy(self, request, pk=None):
+        try:
+            book = UserBook.objects.get(pk=pk)
+            book.delete()
 
-    #     try:
-    #         category = Book.objects.get(pk=pk)
-    #         serializer = BookSerializer(category, context={'request': request})
-    #         return Response(serializer.data)
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
 
-    #     except Book.DoesNotExist as ex:
-    #         return Response({'message': 'Category does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        except UserBook.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+        
+        except Exception as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -99,12 +107,19 @@ class StatusSerializer(serializers.ModelSerializer):
         model = Status
         fields = '__all__'
 
+class CommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = ('id', 'user', 'book', 'comment', 'created_on')
+
 
 class BookSerializer(serializers.ModelSerializer):
 
+    comments = CommentSerializer(many=True)
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = ('id', 'title', 'subtitle', 'author', 'image_path', 'description', 'page_count', 'publisher', 'date_published', 'checkout_date', 'tags', 'comments')
 
 
 class UserBookSerializer(serializers.ModelSerializer):
@@ -114,4 +129,4 @@ class UserBookSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = UserBook
-        fields = ('id', 'user', 'rating', 'review', 'start_date', 'finish_date', 'current_page', 'status', 'book',)
+        fields = ('id', 'user', 'rating', 'review', 'start_date', 'finish_date', 'current_page', 'status', 'book')
