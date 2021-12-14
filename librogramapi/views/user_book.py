@@ -10,6 +10,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
 from librogramapi.models import Book, Reader, UserBook, Status
+from librogramapi.models.comment import Comment
 
 class UserBookView(ViewSet):
     
@@ -99,12 +100,19 @@ class StatusSerializer(serializers.ModelSerializer):
         model = Status
         fields = '__all__'
 
+class CommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = ('id', 'user', 'book', 'comment', 'created_on')
+
 
 class BookSerializer(serializers.ModelSerializer):
 
+    comments = CommentSerializer(many=True)
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = ('id', 'title', 'subtitle', 'author', 'image_path', 'description', 'page_count', 'publisher', 'date_published', 'checkout_date', 'tags', 'comments')
 
 
 class UserBookSerializer(serializers.ModelSerializer):
@@ -114,4 +122,4 @@ class UserBookSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = UserBook
-        fields = ('id', 'user', 'rating', 'review', 'start_date', 'finish_date', 'current_page', 'status', 'book',)
+        fields = ('id', 'user', 'rating', 'review', 'start_date', 'finish_date', 'current_page', 'status', 'book')
