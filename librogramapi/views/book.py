@@ -7,33 +7,39 @@ from rest_framework import status
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
-from librogramapi.models import Book, Comment, UserBook
+from librogramapi.models import Book, Comment, UserBook, Tag, BookTag
 
 class BookView(ViewSet):
     
     def create(self, request):
 
         user = User.objects.get(username=request.auth.user)
-        try:
-            book = Book.objects.create(
-                user=user,
-                title=request.data["title"],
-                author=request.data["author"],
-                image_path=request.data["imagePath"],
-                description=request.data["description"],
-                page_count=request.data["pageCount"],
-                publisher=request.data["publisher"],
-                date_published=request.data["datePublished"],
-            )
-            UserBook.objects.create(
-                user=user,
-                book=book
-            )
-            serializer = BookSerializer(book, context={'request': request})
-            return Response(serializer.data)
-        
-        except ValidationError as ex:
-            return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
+        book = Book.objects.create(
+            user=user,
+            title=request.data["title"],
+            author=request.data["author"],
+            image_path=request.data["imagePath"],
+            description=request.data["description"],
+            page_count=request.data["pageCount"],
+            publisher=request.data["publisher"],
+            date_published=request.data["datePublished"],
+        )
+        UserBook.objects.create(
+            user=user,
+            book=book
+        )
+
+        request_tags = request.data['tags']
+
+        if request_tags:
+            for rt in request_tags:
+                book.tags.get_or_create(label=rt)
+
+
+        serializer = BookSerializer(book, context={'request': request})
+        return Response(serializer.data)
+    
+
 
     def list(self, request):
         books = Book.objects.all()
@@ -76,6 +82,12 @@ class BookView(ViewSet):
 
 
 
+class TagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tag
+        fields = '__all__'
+
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -92,7 +104,8 @@ class CommentSerializer(serializers.ModelSerializer):
 class BookSerializer(serializers.ModelSerializer):
 
     user = UserSerializer()
+    tags = TagSerializer(many=True)
     comments = CommentSerializer(many=True)
     class Meta:
         model = Book
-        fields = ('id', 'user', 'title', 'subtitle', 'author', 'image_path', 'description', 'page_count', 'publisher', 'date_published', 'comments', 'readers_list')
+        fields = ('id', 'user', 'title', 'subtitle', 'author', 'image_path', 'description', 'page_count', 'publisher', 'date_published', 'tags', 'comments', 'readers_list')
