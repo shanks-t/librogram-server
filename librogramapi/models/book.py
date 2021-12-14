@@ -16,5 +16,11 @@ class Book(models.Model):
     checkout_date = models.DateField(auto_now=True)
     tags = models.ManyToManyField(Tag)
 
-    # def __str__(self):
-    #     return self.title
+    @property
+    def readers_list(self):
+        books = Book.objects.filter(title=self.title, author=self.author)
+        readers = []
+        for book in books:
+            readers.append(book.user.username)
+        
+        return readers

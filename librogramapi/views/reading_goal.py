@@ -51,7 +51,6 @@ class ReadingGoalView(ViewSet):
     @action(methods=['PATCH'], detail=True)
     def edit(self, request, pk=None):
 
-
         try:
 
             reading_goal = ReadingGoal.objects.get(pk=pk)

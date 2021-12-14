@@ -5,19 +5,19 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from librogramapi.models import  Comment, Reader, Book
+from librogramapi.models import  Comment, Book
 
 class CommentView(ViewSet):
 
     def create(self, request):
 
-        reader = Reader.objects.get(user=request.auth.user)
-        book = Book.objects.get(id=request.data['postId'])
+        user = User.objects.get(username=request.auth.user)
+        book = Book.objects.get(id=request.data['book'])
 
         try:
             comment = Comment.objects.create(
                 book = book,
-                reader = reader,
+                user = user,
                 comment = request.data["comment"],
             )
             serializer = CommentSerializer(comment, context={'request': request})
@@ -37,7 +37,7 @@ class CommentView(ViewSet):
 
     def update(self, request, pk=None):
 
-        reader = Reader.objects.get(user=request.auth.user)
+        user = User.objects.get(user=request.auth.user)
         book = Book.objects.get(id=request.data['postId'])
 
         # Do mostly the same thing as POST, but instead of
@@ -46,7 +46,7 @@ class CommentView(ViewSet):
         comment = Comment.objects.get(pk=pk)
         comment.comment = request.data["comment"]
         comment.book = book
-        comment.reader = reader
+        comment.user = user
         comment.save()
 
         # 204 status code means everything worked but the
@@ -67,8 +67,16 @@ class CommentView(ViewSet):
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    def list(self, request):
+
+        comments = Comment.objects.all()
+        serializer = CommentSerializer(
+            comments, many=True, context={'request': request}
+        )
+        return Response(serializer.data)
+
 class CommentSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = Comment
-        fields = ( 'id', 'comment', 'reader', 'created_on', )
+        fields = ( 'id', 'comment', 'user', 'created_on', )
