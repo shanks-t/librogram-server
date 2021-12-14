@@ -13,3 +13,10 @@ class UserBook(models.Model):
     start_date = models.DateField(null=True)
     finish_date = models.DateField(null=True)
     current_page = models.IntegerField(null=True)
+
+
+
+
+
+
+

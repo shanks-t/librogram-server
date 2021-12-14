@@ -86,26 +86,6 @@ class UserBookView(ViewSet):
     #     except Book.DoesNotExist as ex:
     #         return Response({'message': 'Category does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-    # def update(self, request, pk=None):
-    #     category = Book.objects.get(pk=pk)
-    #     category.label = request.data['label']
-    #     category.save()
-        
-    #     return Response({}, status=status.HTTP_204_NO_CONTENT)
-
-    # def destroy(self, request, pk=None):
-    #     try:
-    #         category = Book.objects.get(pk=pk)
-    #         category.delete()
-
-    #         return Response({}, status=status.HTTP_204_NO_CONTENT)
-
-    #     except Book.DoesNotExist as ex:
-    #         return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
-        
-    #     except Exception as ex:
-    #         return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -134,4 +114,4 @@ class UserBookSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = UserBook
-        fields = ('id', 'user', 'rating', 'review', 'start_date', 'finish_date', 'current_page', 'status', 'book')
+        fields = ('id', 'user', 'rating', 'review', 'start_date', 'finish_date', 'current_page', 'status', 'book',)
