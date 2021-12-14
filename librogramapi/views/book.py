@@ -69,8 +69,8 @@ class BookView(ViewSet):
 
     def destroy(self, request, pk=None):
         try:
-            category = Book.objects.get(pk=pk)
-            category.delete()
+            book = Book.objects.get(pk=pk)
+            book.delete()
 
             return Response({}, status=status.HTTP_204_NO_CONTENT)
 
