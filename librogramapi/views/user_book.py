@@ -70,8 +70,11 @@ class UserBookView(ViewSet):
     @action(methods=['PATCH'], detail=True)
     def edit(self, request, pk=None):
 
-        statusId = request.data.get('statusId', None)
-        user_status = Status.objects.get(id=statusId)
+        status_id = request.data.get('statusId', None)
+        if status_id:
+            user_status = Status.objects.get(id=status_id)
+        else: 
+            user_status = None
         try:
 
             user_book = UserBook.objects.get(pk=pk)
