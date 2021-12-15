@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework import serializers
 
 from librogramapi.models import  Reader
+from librogramapi.serializers.reader_serializer import  ReaderSerializer
 
 
 
@@ -26,13 +27,3 @@ class ReaderView(ViewSet):
                 [], status=status.HTTP_204_NO_CONTENT
             )
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'first_name', 'last_name', 'username', 'is_staff' )
-
-class ReaderSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-    class Meta:
-        model = Reader
-        fields = ('user', 'bio', 'profile_image_url', 'subscriber')

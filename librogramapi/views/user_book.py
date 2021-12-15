@@ -11,7 +11,8 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 
 from librogramapi.models import Book, Reader, UserBook, Status
-from librogramapi.models.comment import Comment
+from librogramapi.serializers.user_book_serializer import UserBookSerializer
+
 
 
 class UserBookView(ViewSet):
@@ -107,45 +108,3 @@ class UserBookView(ViewSet):
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
-class UserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = ('id', 'first_name', 'last_name', 'username', 'is_staff')
-
-
-class StatusSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Status
-        fields = '__all__'
-
-
-class CommentSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Comment
-        fields = ('id', 'user', 'book', 'comment', 'created_on')
-
-
-class BookSerializer(serializers.ModelSerializer):
-
-    comments = CommentSerializer(many=True)
-
-    class Meta:
-        model = Book
-        fields = ('id', 'title', 'subtitle', 'author', 'image_path', 'description',
-                  'page_count', 'publisher', 'date_published', 'checkout_date', 'tags', 'comments')
-
-
-class UserBookSerializer(serializers.ModelSerializer):
-
-    status = StatusSerializer()
-    book = BookSerializer()
-    user = UserSerializer()
-
-    class Meta:
-        model = UserBook
-        fields = ('id', 'user', 'rating', 'review', 'start_date',
-                  'finish_date', 'current_page', 'status', 'book')

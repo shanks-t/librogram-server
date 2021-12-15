@@ -10,6 +10,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
 from librogramapi.models import ReadingGoal
+from librogramapi.serializers import ReadingGoalSerializer
 
 class ReadingGoalView(ViewSet):
     

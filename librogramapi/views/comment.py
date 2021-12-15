@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from librogramapi.models import  Comment, Book
+from librogramapi.serializers.comment_serializer import CommentSerializer
 
 class CommentView(ViewSet):
 
@@ -75,8 +76,3 @@ class CommentView(ViewSet):
         )
         return Response(serializer.data)
 
-class CommentSerializer(serializers.ModelSerializer):
- 
-    class Meta:
-        model = Comment
-        fields = ( 'id', 'comment', 'user', 'created_on', )
