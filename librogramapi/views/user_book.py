@@ -10,7 +10,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.db.models import Q
 
-from librogramapi.models import Book, Reader, UserBook, Status
+from librogramapi.models import Book, Reader, UserBook, Status, Tag
 from librogramapi.serializers.user_book_serializer import UserBookSerializer
 
 
@@ -43,14 +43,20 @@ class UserBookView(ViewSet):
 
         user = request.auth.user
         user_books = UserBook.objects.filter(user=user)
-
+        tags = Tag.objects.all()
         search_term = self.request.query_params.get('q', None)
+        tag = self.request.query_params.get('tag', None)
 
         if search_term is not None:
             user_books = UserBook.objects.filter(
                 Q(book__title__icontains=search_term) |
                 Q(book__author__icontains=search_term) 
             )
+
+        if tag is not None:
+            for item in tags:
+                if tag == item:
+                    user_books = UserBook.objects.filter(tag=tag)
 
         serializer = UserBookSerializer(
             user_books, many=True, context={'request': request}

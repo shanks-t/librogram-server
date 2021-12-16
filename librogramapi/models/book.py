@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import constraints
+from django.db.models.constraints import UniqueConstraint
 from librogramapi.models.tag import Tag
 
 class Book(models.Model):
@@ -12,7 +14,7 @@ class Book(models.Model):
     description = models.TextField()
     page_count = models.IntegerField()
     publisher = models.CharField(max_length=60)
-    date_published = models.DateField()
+    date_published = models.CharField(max_length=10)
     checkout_date = models.DateField(auto_now=True)
     tags = models.ManyToManyField(Tag)
 
@@ -24,3 +26,9 @@ class Book(models.Model):
             readers.append(book.user.username)
         
         return readers
+
+    class Meta:
+        db_table = 'Book'
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'title', 'author'], name='unique_user_book')
+        ]

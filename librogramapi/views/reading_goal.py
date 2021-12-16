@@ -70,8 +70,3 @@ class ReadingGoalView(ViewSet):
         return Response({'message': 'yay'}, status=status.HTTP_200_OK)
 
 
-class ReadingGoalSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = ReadingGoal
-        fields = ('id', 'number_of_pages', 'number_of_books', 'start_date', 'end_date', 'status')
