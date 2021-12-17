@@ -36,7 +36,6 @@ class BookView(ViewSet):
         if request_tags:
             for rt in request_tags:
                 book.tags.get_or_create(label=rt)
-                user_book.tags.get_or_create(label=rt)
 
         serializer = BookSerializer(book, context={'request': request})
         return Response(serializer.data)
