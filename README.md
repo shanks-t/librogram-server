@@ -21,7 +21,7 @@ https://drawsql.app/nss-7/diagrams/librogram#
 
 ## Tech Stack
 
-**Client:** React, HTML, CSS, React-Bootstrap
+**Client:** ReactJS, HTML, CSS, React-Bootstrap
 - https://github.com/shanks-t/librogram-client
 
 **Server:** Python, Django, SQLite3
