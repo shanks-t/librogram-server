@@ -12,9 +12,8 @@ This is the final, server-side project for NSS full-stack boot camp. The live ap
 ## Features
 
 - Full crud functionality with server
-- Custom actions for signing up and leaving events
-- Custom properties for dynamic event and user content
-- Database filtering of events based on queries
+- Filtering books by title, author, book length or category via django ORM
+- A custom property for calculating and updating progress toward reading goals
 
 ## Librogam ERD
 https://drawsql.app/nss-7/diagrams/librogram#
@@ -23,16 +22,16 @@ https://drawsql.app/nss-7/diagrams/librogram#
 ## Tech Stack
 
 **Client:** React, HTML, CSS, React-Bootstrap
-- https://github.com/DArmstrong87/Librogram
+- https://github.com/shanks-t/librogram-client
 
 **Server:** Python, Django, SQLite3
-- https://github.com/DArmstrong87/Librogram-server
+- https://github.com/shanks-t/librogram-server
 ## Run Locally
 
 Clone the project
 
 ```bash
-  git clone https://github.com/DArmstrong87/Librogram-server
+  git clone https://github.com/shanks-t/librogram-server
 ```
 
 Go to the project directory
