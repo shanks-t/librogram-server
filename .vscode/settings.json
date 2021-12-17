@@ -9,8 +9,8 @@
         {
             "previewLimit": 50,
             "driver": "SQLite",
-            "database": "db.sqlite3",
-            "name": "librogram db"
+            "name": "librogam db",
+            "database": "db.sqlite3"
         }
     ]
     
