@@ -9,7 +9,7 @@ class ReadingGoal(models.Model):
 
     number_of_pages = models.IntegerField(null=True)
     number_of_books = models.IntegerField(null=True)
-    start_date = models.DateField(auto_now=True)
+    start_date = models.DateField(auto_now_add=True)
     end_date = models.DateField(null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -22,14 +22,15 @@ class ReadingGoal(models.Model):
         completed_books = 0
         if self.end_date <= today:
             for book in user_books:
-                if book.status.label == 'finished':
-                    completed_books += 1
+                if book.status:
+                    if book.status.label == 'finished':
+                        completed_books += 1
             
             if completed_books >= self.number_of_books:
                 return "completed"
             else:
                 return "incomplete"
-
+        return 'incomplete'
         
 
 #completed_pages = 0

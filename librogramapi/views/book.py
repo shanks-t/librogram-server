@@ -7,7 +7,9 @@ from rest_framework import status
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
-from librogramapi.models import Book, Comment, UserBook, Tag, BookTag
+
+from librogramapi.models import Book, Comment, UserBook, Tag
+from librogramapi.serializers.book_serializer import BookSerializer
 
 class BookView(ViewSet):
     
@@ -18,23 +20,23 @@ class BookView(ViewSet):
             user=user,
             title=request.data["title"],
             author=request.data["author"],
-            image_path=request.data["imagePath"],
-            description=request.data["description"],
-            page_count=request.data["pageCount"],
+            image_path=request.data.get("imagePath", None),
+            description=request.data.get("description", None),
+            page_count=request.data.get("pageCount", None),
             publisher=request.data["publisher"],
-            date_published=request.data["datePublished"],
+            date_published=request.data.get("datePublished", None)
         )
-        UserBook.objects.create(
+        user_book = UserBook.objects.create(
             user=user,
             book=book
         )
 
-        request_tags = request.data['tags']
+        request_tags = request.data.get('tags', None)
 
         if request_tags:
             for rt in request_tags:
                 book.tags.get_or_create(label=rt)
-
+                user_book.tags.get_or_create(label=rt)
 
         serializer = BookSerializer(book, context={'request': request})
         return Response(serializer.data)
@@ -60,13 +62,6 @@ class BookView(ViewSet):
         except Book.DoesNotExist as ex:
             return Response({'message': 'Book does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-    # def update(self, request, pk=None):
-    #     category = Book.objects.get(pk=pk)
-    #     category.label = request.data['label']
-    #     category.save()
-        
-    #     return Response({}, status=status.HTTP_204_NO_CONTENT)
-
     def destroy(self, request, pk=None):
         try:
             book = Book.objects.get(pk=pk)
@@ -82,30 +77,3 @@ class BookView(ViewSet):
 
 
 
-class TagSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Tag
-        fields = '__all__'
-
-class UserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = ('username',)
-
-class CommentSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-    class Meta:
-        model = Comment
-        fields = ('id', 'user', 'comment', 'created_on')
-        depth = 1
-
-class BookSerializer(serializers.ModelSerializer):
-
-    user = UserSerializer()
-    tags = TagSerializer(many=True)
-    comments = CommentSerializer(many=True)
-    class Meta:
-        model = Book
-        fields = ('id', 'user', 'title', 'subtitle', 'author', 'image_path', 'description', 'page_count', 'publisher', 'date_published', 'tags', 'comments', 'readers_list')
