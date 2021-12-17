@@ -43,7 +43,6 @@ class UserBookView(ViewSet):
 
         user = request.auth.user
         user_books = UserBook.objects.filter(user=user)
-        tags = Tag.objects.all()
         search_term = self.request.query_params.get('q', None)
         tag = self.request.query_params.get('tag', None)
 

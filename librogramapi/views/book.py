@@ -20,9 +20,9 @@ class BookView(ViewSet):
             user=user,
             title=request.data["title"],
             author=request.data["author"],
-            image_path=request.data["imagePath"],
-            description=request.data["description"],
-            page_count=request.data["pageCount"],
+            image_path=request.data.get("imagePath", None),
+            description=request.data.get("description", None),
+            page_count=request.data.get("pageCount", None),
             publisher=request.data["publisher"],
             date_published=request.data["datePublished"],
         )
@@ -31,7 +31,7 @@ class BookView(ViewSet):
             book=book
         )
 
-        request_tags = request.data['tags']
+        request_tags = request.data.get('tags', None)
 
         if request_tags:
             for rt in request_tags:
