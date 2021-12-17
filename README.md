@@ -1,3 +1,7 @@
+## Overview
+I love books, have since I was very small. They have been a source of comfort and exploration for me all my life. This app is an expression of my joy for reading. It allows users to search for books via google's free books api, and then save all the books they've ever read to their user library. Users can make comments about the books in their library and see a list of other users that have checkout out each book. Also, in the user profile users can set reading goals which are dynamically updated as they update the progress of each book by setting the status of the book to 'unread', 'in-progress' or 'finished'. User can also filter their personal library by category, author, title or number of pages. 
+
+
 ## Table of contents
 * [Librogram](#Librogram)
 * [Features](#features)
