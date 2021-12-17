@@ -24,7 +24,7 @@ class BookView(ViewSet):
             description=request.data.get("description", None),
             page_count=request.data.get("pageCount", None),
             publisher=request.data["publisher"],
-            date_published=request.data["datePublished"],
+            date_published=request.data.get("datePublished", None)
         )
         user_book = UserBook.objects.create(
             user=user,
