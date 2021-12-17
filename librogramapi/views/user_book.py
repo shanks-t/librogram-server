@@ -44,6 +44,7 @@ class UserBookView(ViewSet):
         user = request.auth.user
         user_books = UserBook.objects.filter(user=user)
         search_term = self.request.query_params.get('q', None)
+        length = self.request.query_params.get('bookLength', None)
         tag = self.request.query_params.get('tag', None)
 
         if search_term is not None:
@@ -55,6 +56,11 @@ class UserBookView(ViewSet):
         if tag is not None:
             user_books = UserBook.objects.filter(
                 Q(book__tags=tag))
+        
+        if length is not None:
+            user_books = UserBook.objects.filter(
+                Q(book__page_count__lte=length)
+            )
 
         serializer = UserBookSerializer(
             user_books, many=True, context={'request': request}
