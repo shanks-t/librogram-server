@@ -54,9 +54,8 @@ class UserBookView(ViewSet):
             )
 
         if tag is not None:
-            for item in tags:
-                if tag == item:
-                    user_books = UserBook.objects.filter(tag=tag)
+            user_books = UserBook.objects.filter(
+                Q(book__tags=tag))
 
         serializer = UserBookSerializer(
             user_books, many=True, context={'request': request}

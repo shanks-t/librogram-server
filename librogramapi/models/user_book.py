@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from librogramapi.models.status import Status
-
+from librogramapi.models.tag import Tag
+from librogramapi.models.book import Book
 
 class UserBook(models.Model):
 
@@ -13,3 +14,5 @@ class UserBook(models.Model):
     start_date = models.DateField(null=True)
     finish_date = models.DateField(null=True)
     current_page = models.IntegerField(null=True)
+
+

@@ -26,7 +26,7 @@ class BookView(ViewSet):
             publisher=request.data["publisher"],
             date_published=request.data["datePublished"],
         )
-        UserBook.objects.create(
+        user_book = UserBook.objects.create(
             user=user,
             book=book
         )
@@ -36,7 +36,7 @@ class BookView(ViewSet):
         if request_tags:
             for rt in request_tags:
                 book.tags.get_or_create(label=rt)
-
+                user_book.tags.get_or_create(label=rt)
 
         serializer = BookSerializer(book, context={'request': request})
         return Response(serializer.data)
@@ -61,13 +61,6 @@ class BookView(ViewSet):
 
         except Book.DoesNotExist as ex:
             return Response({'message': 'Book does not exist'}, status=status.HTTP_404_NOT_FOUND)
-
-    # def update(self, request, pk=None):
-    #     category = Book.objects.get(pk=pk)
-    #     category.label = request.data['label']
-    #     category.save()
-        
-    #     return Response({}, status=status.HTTP_204_NO_CONTENT)
 
     def destroy(self, request, pk=None):
         try:

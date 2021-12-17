@@ -23,7 +23,8 @@ class Book(models.Model):
         books = Book.objects.filter(title=self.title, author=self.author)
         readers = []
         for book in books:
-            readers.append(book.user.username)
+            reader = book.user.username
+            readers.append(reader)
         
         return readers
 
