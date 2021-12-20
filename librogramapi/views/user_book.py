@@ -48,17 +48,17 @@ class UserBookView(ViewSet):
         tag = self.request.query_params.get('tag', None)
 
         if search_term is not None:
-            user_books = UserBook.objects.filter(
+            user_books = user_books.filter(
                 Q(book__title__icontains=search_term) |
                 Q(book__author__icontains=search_term) 
             )
 
         if tag is not None:
-            user_books = UserBook.objects.filter(
+            user_books = user_books.filter(
                 Q(book__tags=tag))
         
         if length is not None:
-            user_books = UserBook.objects.filter(
+            user_books = user_books.filter(
                 Q(book__page_count__lte=length)
             )
 

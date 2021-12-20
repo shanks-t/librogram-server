@@ -18,19 +18,19 @@ class ReadingGoal(models.Model):
     def status(self):
 
         today = date.today()
-        goal = self.end_date
+        goal_date = self.end_date
         user_books = UserBook.objects.filter(user=self.user)
         completed_books = 0
-        if goal >= today:
+        if goal_date >= today:
             for book in user_books:
                 if book.status:
                     if book.status.label == 'finished':
                         completed_books += 1
-            
-            if completed_books >= self.number_of_books:
-                return "completed"
-            else:
-                return "incomplete"
+                if completed_books:
+                    progress = self.number_of_books/completed_books
+                    return progress
+                else:
+                    return 0
         return 'reading goal expired'
         
 
