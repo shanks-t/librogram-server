@@ -8,7 +8,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 
-from librogramapi.models import Book, Comment, UserBook, Tag
+from librogramapi.models import Book, Comment, UserBook, Tag, user_book
 from librogramapi.serializers.book_serializer import BookSerializer
 
 class BookView(ViewSet):
@@ -23,9 +23,10 @@ class BookView(ViewSet):
             image_path=request.data.get("imagePath", None),
             description=request.data.get("description", None),
             page_count=request.data.get("pageCount", None),
-            publisher=request.data["publisher"],
+            publisher=request.data.get("publisher", None),
             date_published=request.data.get("datePublished", None)
         )
+
         user_book = UserBook.objects.create(
             user=user,
             book=book
@@ -35,8 +36,9 @@ class BookView(ViewSet):
 
         if request_tags:
             for rt in request_tags:
-                book.tags.get_or_create(label=rt)
-
+                tag = Tag.objects.get_or_create(label=rt)
+                x, y = (tag)
+                book.tags.add(x)
         serializer = BookSerializer(book, context={'request': request})
         return Response(serializer.data)
     
@@ -64,7 +66,9 @@ class BookView(ViewSet):
     def destroy(self, request, pk=None):
         try:
             book = Book.objects.get(pk=pk)
+            user_book = UserBook.objects.get(pk=pk)
             book.delete()
+            user_book
 
             return Response({}, status=status.HTTP_204_NO_CONTENT)
 
