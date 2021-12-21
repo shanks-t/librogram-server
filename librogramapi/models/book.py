@@ -13,7 +13,7 @@ class Book(models.Model):
     image_path = models.URLField(null=True)
     description = models.TextField(null=True)
     page_count = models.IntegerField(null=True)
-    publisher = models.CharField(max_length=60)
+    publisher = models.CharField(max_length=60, null=True)
     date_published = models.CharField(max_length=10)
     checkout_date = models.DateField(auto_now=True)
     tags = models.ManyToManyField(Tag)

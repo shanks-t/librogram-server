@@ -107,9 +107,10 @@ class UserBookView(ViewSet):
 
     def destroy(self, request, pk=None):
         try:
-            book = UserBook.objects.get(pk=pk)
+            user_book = UserBook.objects.get(pk=pk)
+            book = Book.objects.get(pk=pk)
+            user_book.delete()
             book.delete()
-
             return Response({}, status=status.HTTP_204_NO_CONTENT)
 
         except UserBook.DoesNotExist as ex:
