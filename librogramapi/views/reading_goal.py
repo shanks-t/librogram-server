@@ -70,3 +70,16 @@ class ReadingGoalView(ViewSet):
         return Response({'message': 'yay'}, status=status.HTTP_200_OK)
 
 
+    def destroy(self, request, pk=None):
+
+        try:
+            reading_goal = ReadingGoal.objects.get(pk=pk)
+            reading_goal.delete()
+
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+        except ReadingGoal.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

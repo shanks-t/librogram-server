@@ -28,7 +28,11 @@ class ReadingGoal(models.Model):
                         completed_books += 1
             if completed_books:
                 progress = round((completed_books/self.number_of_books * 100), 2)
-                return progress
+                if progress > 100:
+                    progress = 100
+                    return progress
+                else:
+                    return progress
             else:
                 return 0
         return 'reading goal expired'
