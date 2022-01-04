@@ -26,4 +26,22 @@ class ReaderView(ViewSet):
             return Response(
                 [], status=status.HTTP_204_NO_CONTENT
             )
+    @action(methods=['PATCH'], detail=True)
+    def edit(self, request, pk=None):
 
+        reader = Reader.objects.get(pk=pk)
+
+        # Do mostly the same thing as POST, but instead of
+        # creating a new instance of Game, get the game record
+        # from the database whose primary key is `pk`
+        bio = request.data.get('bio', None)
+        profile_image_url = request.data.get('profile_image_url', None)
+        if bio:
+            reader.bio = bio
+        if profile_image_url: 
+            reader.profile_image_url = profile_image_url
+        reader.save()
+
+        # 204 status code means everything worked but the
+        # server is not sending back any data in the response
+        return Response({'yeah yeah yeah'}, status=status.HTTP_204_NO_CONTENT)

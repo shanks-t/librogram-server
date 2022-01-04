@@ -21,21 +21,22 @@ class ReadingGoal(models.Model):
         goal_date = self.end_date
         user_books = UserBook.objects.filter(user=self.user)
         completed_books = 0
-        if goal_date >= today:
-            for book in user_books:
-                if book.status:
-                    if book.status.label == 'finished':
-                        completed_books += 1
-            if completed_books:
-                progress = round((completed_books/self.number_of_books * 100), 2)
-                if progress > 100:
-                    progress = 100
-                    return progress
-                else:
-                    return progress
-            else:
-                return 0
-        return 'reading goal expired'
+        for book in user_books:
+            if book.status and self.number_of_books:
+                if book.status.label == 'finished':
+                    completed_books += 1
+        if completed_books:
+            progress = round((completed_books/self.number_of_books * 100), 2)
+            if progress > 100:
+                progress = 100
+                return progress
+            elif goal_date >= today:
+                return progress
+            elif goal_date < today:
+                return f'expired  {progress}'
+        else:
+            return 0
+    
         
 
 #completed_pages = 0
