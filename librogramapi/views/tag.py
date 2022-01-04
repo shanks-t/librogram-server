@@ -21,8 +21,8 @@ class TagView(ViewSet):
             return HttpResponseServerError(ex)
 
     def list(self, request):
-
-        tags = Tag.objects.all()
+        
+        tags = Tag.objects.filter()
 
         # Note the additional `many=True` argument to the
         # serializer. It's needed when you are serializing
