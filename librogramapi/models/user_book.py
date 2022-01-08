@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from librogramapi.models.status import Status
-from librogramapi.models.tag import Tag
-from librogramapi.models.book import Book
 
 class UserBook(models.Model):
 
