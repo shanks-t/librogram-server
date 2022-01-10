@@ -25,9 +25,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class BookSerializer(serializers.ModelSerializer):
 
-    user = UserSerializer()
+    #user = UserSerializer()
     tags = TagSerializer(many=True)
     comments = CommentSerializer(many=True)
     class Meta:
         model = Book
-        fields = ('id', 'user', 'title', 'subtitle', 'author', 'image_path', 'description', 'page_count', 'publisher', 'date_published', 'tags', 'comments', 'readers_list')
+        fields = ('id', 'title', 'subtitle', 'authors', 'image_path', 'description', 'page_count', 'publisher', 'date_published', 'tags', 'comments')

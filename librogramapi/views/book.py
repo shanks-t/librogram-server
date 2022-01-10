@@ -8,7 +8,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 
-from librogramapi.models import Book, Comment, UserBook, Tag, user_book
+from librogramapi.models import Book, Comment, UserBook, Tag, user_book, Author 
 from librogramapi.serializers.book_serializer import BookSerializer
 
 class BookView(ViewSet):
@@ -17,9 +17,7 @@ class BookView(ViewSet):
 
         user = User.objects.get(username=request.auth.user)
         book = Book.objects.create(
-            user=user,
             title=request.data["title"],
-            author=request.data["author"],
             image_path=request.data.get("imagePath", None),
             description=request.data.get("description", None),
             page_count=request.data.get("pageCount", None),
@@ -31,6 +29,13 @@ class BookView(ViewSet):
             user=user,
             book=book
         )
+        authors = request.data.get('authors', None)
+        
+        if authors:
+            for a in authors:
+                author = Author.objects.get_or_create(author=a)
+                b, c = (author)
+                book.authors.add(b)
 
         request_tags = request.data.get('tags', None)
 
@@ -63,20 +68,20 @@ class BookView(ViewSet):
         except Book.DoesNotExist as ex:
             return Response({'message': 'Book does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-    def destroy(self, request, pk=None):
-        try:
-            book = Book.objects.get(pk=pk)
-            user_book = UserBook.objects.get(pk=pk)
-            book.delete()
-            user_book
+    # def destroy(self, request, pk=None):
+    #     try:
+    #         book = Book.objects.get(pk=pk)
+    #         user_book = UserBook.objects.get(pk=pk)
+    #         book.delete()
+    #         user_book
 
-            return Response({}, status=status.HTTP_204_NO_CONTENT)
+    #         return Response({}, status=status.HTTP_204_NO_CONTENT)
 
-        except Book.DoesNotExist as ex:
-            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+    #     except Book.DoesNotExist as ex:
+    #         return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
         
-        except Exception as ex:
-            return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    #     except Exception as ex:
+    #         return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 

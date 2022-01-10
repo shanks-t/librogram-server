@@ -25,7 +25,7 @@ class BookSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True)
     class Meta:
         model = Book
-        fields = ('id', 'title', 'subtitle', 'author', 'image_path', 'description',
+        fields = ('id', 'title', 'subtitle', 'authors', 'image_path', 'description',
                   'page_count', 'publisher', 'date_published', 'checkout_date', 'tags', 'comments')
 
 
