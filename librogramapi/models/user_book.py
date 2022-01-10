@@ -7,7 +7,7 @@ from librogramapi.models.status import Status
 class UserBook(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    book = models.OneToOneField("Book", on_delete=models.CASCADE)
+    book = models.ForeignKey("Book", on_delete=models.CASCADE, default='none')
     status = models.ForeignKey(Status, on_delete=models.CASCADE, default=1)
     rating = models.FloatField(null=True)
     review = models.TextField(null=True)

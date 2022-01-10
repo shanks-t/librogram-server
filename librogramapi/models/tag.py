@@ -1,5 +1,4 @@
 from django.db import models
-from librogramapi.models.user_book import UserBook
 
 
 class Tag(models.Model):

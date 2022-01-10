@@ -25,17 +25,17 @@ class BookView(ViewSet):
             date_published=request.data.get("datePublished", None)
         )
 
-        user_book = UserBook.objects.create(
-            user=user,
-            book=book
-        )
+        user_book_1 = UserBook(user=user, book=book)
+        user_book_1.save()
+        
         authors = request.data.get('authors', None)
         
         if authors:
             for a in authors:
-                author = Author.objects.get_or_create(author=a)
-                b, c = (author)
-                book.authors.add(b)
+                obj = Author(name=a)
+                obj.save()
+                book.authors.add(obj)
+                print(obj.name)
 
         request_tags = request.data.get('tags', None)
 

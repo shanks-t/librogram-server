@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 
 
 class Author(models.Model):
-    author = models.TextField(max_length=100, default='none', null=True)
+    name = models.TextField(max_length=100, default='none', null=True)
 
 
+    def __str__(self):
+        return self.name

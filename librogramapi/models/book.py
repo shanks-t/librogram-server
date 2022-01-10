@@ -4,7 +4,6 @@ from django.db.models import constraints
 from django.db.models.constraints import UniqueConstraint
 from librogramapi.models.tag import Tag
 from librogramapi.models.author import Author
-from librogramapi.models.user_book import UserBook
 
 class Book(models.Model):
 
