@@ -35,7 +35,7 @@ class ReaderView(ViewSet):
         # creating a new instance of Game, get the game record
         # from the database whose primary key is `pk`
         bio = request.data.get('bio', None)
-        profile_image_url = request.data.get('profile_image_url', None)
+        profile_image_url = request.data.get('profileImageUrl', None)
         if bio:
             reader.bio = bio
         if profile_image_url: 
