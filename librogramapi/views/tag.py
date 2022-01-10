@@ -20,16 +20,16 @@ class TagView(ViewSet):
         except Exception as ex:
             return HttpResponseServerError(ex)
 
-    def list(self, request):
+    # def list(self, request):
         
-        tags = Tag.objects.filter()
+    #     tags = Tag.objects.filter()
 
-        # Note the additional `many=True` argument to the
-        # serializer. It's needed when you are serializing
-        # a list of objects instead of a single object.
-        serializer = TagSerializer(
-            tags, many=True, context={'request': request})
-        return Response(serializer.data)
+    #     # Note the additional `many=True` argument to the
+    #     # serializer. It's needed when you are serializing
+    #     # a list of objects instead of a single object.
+    #     serializer = TagSerializer(
+    #         tags, many=True, context={'request': request})
+    #     return Response(serializer.data)
 
     def destroy(self, request, pk=None):
 

@@ -6,3 +6,5 @@ from .book_tag import BookTag
 from .reading_goal import ReadingGoal
 from .status import Status
 from .tag import Tag
+from .author import Author
+from .book_author import BookAuthor

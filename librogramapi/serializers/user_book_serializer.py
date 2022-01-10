@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from librogramapi.models import Status, Comment, Book, UserBook, Tag
+from librogramapi.models import Status, Comment, Book, UserBook, Tag, Author
 from librogramapi.serializers.comment_serializer import CommentSerializer
 from librogramapi.serializers.status_serializer import StatusSerializer
 
@@ -18,14 +18,20 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'first_name', 'last_name', 'username', 'is_staff')
 
-
+class AuthorSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Author
+        fields = ('id', 'name')
+        
 class BookSerializer(serializers.ModelSerializer):
 
+    authors = AuthorSerializer(many=True)
     comments = CommentSerializer(many=True)
     tags = TagSerializer(many=True)
     class Meta:
         model = Book
-        fields = ('id', 'title', 'subtitle', 'author', 'image_path', 'description',
+        fields = ('id', 'title', 'subtitle', 'authors', 'image_path', 'description',
                   'page_count', 'publisher', 'date_published', 'checkout_date', 'tags', 'comments')
 
 
