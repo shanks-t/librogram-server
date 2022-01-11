@@ -36,10 +36,13 @@ class ReaderView(ViewSet):
         # from the database whose primary key is `pk`
         bio = request.data.get('bio', None)
         profile_image_url = request.data.get('profileImageUrl', None)
+        background_image_url = request.data.get('backgroundImageUrl', None)
         if bio:
             reader.bio = bio
         if profile_image_url: 
             reader.profile_image_url = profile_image_url
+        if background_image_url:
+            reader.background_image_url = background_image_url
         reader.save()
 
         # 204 status code means everything worked but the
