@@ -1,10 +1,14 @@
-from rest_framework import status
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseServerError
+from django.contrib.auth.models import User
+from django.db.models import Q
+
+from rest_framework import status
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from rest_framework.decorators import action
+
 from librogramapi.models import  Comment, Book
 from librogramapi.serializers.comment_serializer import CommentSerializer
 
@@ -71,8 +75,15 @@ class CommentView(ViewSet):
     def list(self, request):
 
         comments = Comment.objects.all()
+        bookId = self.request.query_params.get('bookId', None)
+        
+        if bookId is not None:
+            comments = comments.filter(
+                Q(book__id__=bookId)
+            )
+        
         serializer = CommentSerializer(
-            comments, many=True, context={'request': request}
+        comments, many=True, context={'request': request}
         )
         return Response(serializer.data)
 

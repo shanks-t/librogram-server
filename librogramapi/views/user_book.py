@@ -85,7 +85,7 @@ class UserBookView(ViewSet):
         if status_id:
             user_status = Status.objects.get(id=status_id)
         else: 
-            user_status = None
+            user_status = Status.objects.first()
         try:
 
             user_book = UserBook.objects.get(pk=pk)
