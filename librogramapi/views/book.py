@@ -16,7 +16,7 @@ class BookView(ViewSet):
     def create(self, request):
 
         user = User.objects.get(username=request.auth.user)
-        book = Book.objects.create(
+        book = Book.objects.get_or_create(
             title=request.data["title"],
             image_path=request.data.get("imagePath", None),
             description=request.data.get("description", None),
@@ -24,26 +24,31 @@ class BookView(ViewSet):
             publisher=request.data.get("publisher", None),
             date_published=request.data.get("datePublished", None)
         )
+        print(book)
+        if type(book) == tuple:
+            book, created = (book)
+            user_book_1 = UserBook(user=user, book=book)
+            user_book_1.save()
+        else:
+            user_book_1 = UserBook(user=user, book=book)
+            user_book_1.save()
+            
+            authors = request.data.get('authors', None)
+            
+            if authors:
+                for a in authors:
+                    obj = Author(name=a)
+                    obj.save()
+                    book.authors.add(obj)
+                    print(obj.name)
 
-        user_book_1 = UserBook(user=user, book=book)
-        user_book_1.save()
-        
-        authors = request.data.get('authors', None)
-        
-        if authors:
-            for a in authors:
-                obj = Author(name=a)
-                obj.save()
-                book.authors.add(obj)
-                print(obj.name)
+            request_tags = request.data.get('tags', None)
 
-        request_tags = request.data.get('tags', None)
-
-        if request_tags:
-            for rt in request_tags:
-                tag = Tag.objects.get_or_create(label=rt)
-                x, y = (tag)
-                book.tags.add(x)
+            if request_tags:
+                for rt in request_tags:
+                    tag = Tag.objects.get_or_create(label=rt)
+                    tag, created = (tag)
+                    book.tags.add(tag)
         serializer = BookSerializer(book, context={'request': request})
         return Response(serializer.data)
     

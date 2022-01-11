@@ -45,6 +45,7 @@ class UserBookView(ViewSet):
         user_books = UserBook.objects.filter(user=user)
         search_term = self.request.query_params.get('q', None)
         length = self.request.query_params.get('bookLength', None)
+        rating = self.request.query_params.get('rating', None)
         tag = self.request.query_params.get('tag', None)
 
         if search_term is not None:
@@ -59,9 +60,18 @@ class UserBookView(ViewSet):
         
         if length is not None:
             user_books = user_books.filter(
-                Q(book__page_count__lte=length)
+                Q(book__page_count__gte=length)
             )
-
+            
+        if rating is not None and float(rating) > 5:
+            user_books = user_books.filter(
+                Q(rating__gte=rating)
+            )
+        elif rating is not None and float(rating) < 5:
+            user_books = user_books.filter(
+                Q(rating__lte=rating)
+            )
+            
         serializer = UserBookSerializer(
             user_books, many=True, context={'request': request}
         )
@@ -108,9 +118,7 @@ class UserBookView(ViewSet):
     def destroy(self, request, pk=None):
         try:
             user_book = UserBook.objects.get(pk=pk)
-            book = Book.objects.get(pk=pk)
             user_book.delete()
-            book.delete()
             return Response({}, status=status.HTTP_204_NO_CONTENT)
 
         except UserBook.DoesNotExist as ex:
