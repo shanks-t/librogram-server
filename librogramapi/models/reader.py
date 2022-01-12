@@ -22,17 +22,27 @@ class Reader(models.Model):
         return total
     
     @property
+    def finished_books(self): 
+        books = UserBook.objects.filter(user=self.user)
+        total = []
+        for book in books:
+            if book.status.label == 'finished':
+                total.append(book)
+        
+        return len(total)
+    
+    @property
     def goals(self):
         goals = ReadingGoal.objects.filter(user=self.user)
         total = len(goals)
         return total
        
-    @property 
-    def active_goals(self):
-        today = date.today()
-        goals = ReadingGoal.objects.filter(user=self.user)
-        active = []
-        for goal in goals:
-            if goal.end_date > today:
-                active.append(goal)
-        return len(active)
+    # @property 
+    # def active_goals(self):
+    #     today = date.today()
+    #     goals = ReadingGoal.objects.filter(user=self.user)
+    #     active = []
+    #     for goal in goals:
+    #         if goal.end_date > today:
+    #             active.append(goal)
+    #     return len(active)

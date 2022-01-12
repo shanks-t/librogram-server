@@ -79,7 +79,7 @@ class CommentView(ViewSet):
         
         if bookId is not None:
             comments = comments.filter(
-                Q(book__id__=bookId)
+                Q(book__id=bookId)
             )
         
         serializer = CommentSerializer(

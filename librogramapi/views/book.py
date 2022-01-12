@@ -16,7 +16,7 @@ class BookView(ViewSet):
     def create(self, request):
 
         user = User.objects.get(username=request.auth.user)
-        book = Book.objects.create(
+        book = Book.objects.get_or_create(
             title=request.data["title"],
             image_path=request.data.get("imagePath", None),
             description=request.data.get("description", None),
@@ -24,12 +24,17 @@ class BookView(ViewSet):
             publisher=request.data.get("publisher", None),
             date_published=request.data.get("datePublished", None)
         )
-
-        user_book_1 = UserBook(user=user, book=book)
-        user_book_1.save()
-        
+        print(book)
+        if type(book) == tuple:
+            book, created = (book)
+            user_book_1 = UserBook(user=user, book=book)
+            user_book_1.save()
+        else:
+            user_book_1 = UserBook(user=user, book=book)
+            user_book_1.save()
+            
         authors = request.data.get('authors', None)
-        
+            
         if authors:
             for a in authors:
                 obj = Author(name=a)
@@ -42,8 +47,8 @@ class BookView(ViewSet):
         if request_tags:
             for rt in request_tags:
                 tag = Tag.objects.get_or_create(label=rt)
-                x, y = (tag)
-                book.tags.add(x)
+                tag, created = (tag)
+                book.tags.add(tag)
         serializer = BookSerializer(book, context={'request': request})
         return Response(serializer.data)
     
