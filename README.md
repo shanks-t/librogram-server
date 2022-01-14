@@ -65,3 +65,14 @@ Start server
 ```bash
   pipenv runserver
 ```
+<<<<<<< HEAD
+Clone Frontend Repo Listed above 
+```bash
+  git clone https://github.com/shanks-t/librogram-server
+```
+Run the React app  
+```bash
+  npm start
+```
+=======
+>>>>>>> main
