@@ -33,22 +33,22 @@ class BookView(ViewSet):
             user_book_1 = UserBook(user=user, book=book)
             user_book_1.save()
             
-            authors = request.data.get('authors', None)
+        authors = request.data.get('authors', None)
             
-            if authors:
-                for a in authors:
-                    obj = Author(name=a)
-                    obj.save()
-                    book.authors.add(obj)
-                    print(obj.name)
+        if authors:
+            for a in authors:
+                obj = Author(name=a)
+                obj.save()
+                book.authors.add(obj)
+                print(obj.name)
 
-            request_tags = request.data.get('tags', None)
+        request_tags = request.data.get('tags', None)
 
-            if request_tags:
-                for rt in request_tags:
-                    tag = Tag.objects.get_or_create(label=rt)
-                    tag, created = (tag)
-                    book.tags.add(tag)
+        if request_tags:
+            for rt in request_tags:
+                tag = Tag.objects.get_or_create(label=rt)
+                tag, created = (tag)
+                book.tags.add(tag)
         serializer = BookSerializer(book, context={'request': request})
         return Response(serializer.data)
     
