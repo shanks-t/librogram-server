@@ -66,14 +66,11 @@ Start server
   pipenv runserver
 ```
 
-<<<<<<< HEAD
 Make sure to seed database with statuses for user-book details
 ```bash
   python manage.py loaddata statuses
 ```
 
-=======
->>>>>>> main
 Clone Frontend Repo Listed above 
 ```bash
   git clone https://github.com/shanks-t/librogram-server
