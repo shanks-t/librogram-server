@@ -17,7 +17,8 @@ class CommentView(ViewSet):
     def create(self, request):
 
         user = User.objects.get(username=request.auth.user)
-        book = Book.objects.get(id=request.data['bookId'])
+        id = self.request.query_params.get('bookId', None)
+        book = Book.objects.get(id=id)
 
         try:
             comment = Comment.objects.create(
