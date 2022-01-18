@@ -10,7 +10,7 @@
             "django": true,
             "autoReload":{
                 "enable": true
-            }
+            },
         }
     ]
 }

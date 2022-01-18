@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseServerError
 
-from rest_framework.decorators import action
+from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
@@ -10,6 +10,9 @@ from rest_framework import serializers
 
 from librogramapi.models import Book, Comment, UserBook, Tag, user_book, Author 
 from librogramapi.serializers.book_serializer import BookSerializer
+
+import requests
+import os
 
 class BookView(ViewSet):
     
@@ -73,20 +76,17 @@ class BookView(ViewSet):
         except Book.DoesNotExist as ex:
             return Response({'message': 'Book does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-    # def destroy(self, request, pk=None):
-    #     try:
-    #         book = Book.objects.get(pk=pk)
-    #         user_book = UserBook.objects.get(pk=pk)
-    #         book.delete()
-    #         user_book
 
-    #         return Response({}, status=status.HTTP_204_NO_CONTENT)
-
-    #     except Book.DoesNotExist as ex:
-    #         return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+    @api_view
+    def get_search_results(self, request):
         
-    #     except Exception as ex:
-    #         return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        API_KEY = os.environ.get('GOOGLE_API')
+        search = self.request.query_params.get('search', None)
+        
+        URL = f'https://www.googleapis.com/books/v1/volumes?q={search}&key={API_KEY}&maxResults=30'
 
-
-
+        r = requests.get(url = URL)
+        
+        data = r.json()
+        
+        return Response(data)
