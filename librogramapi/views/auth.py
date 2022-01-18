@@ -45,8 +45,6 @@ def register_user(request):
     request -- The full HTTP request object
     '''
 
-    # Create a new user by invoking the `create_user` helper method
-    # on Django's built-in User model
     new_user = User.objects.create_user(
         username=request.data['username'],
         password=request.data['password'],
@@ -56,7 +54,6 @@ def register_user(request):
         is_staff=request.data['is_staff']
     )
 
-    # Now save the extra info in the levelupapi_gamer table
     """
     change this ->
     """
