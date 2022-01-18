@@ -11,7 +11,6 @@ from rest_framework import serializers
 from librogramapi.models import Book, Comment, UserBook, Tag, user_book, Author 
 from librogramapi.serializers.book_serializer import BookSerializer
 
-import requests
 import os
 
 class BookView(ViewSet):
@@ -76,17 +75,3 @@ class BookView(ViewSet):
         except Book.DoesNotExist as ex:
             return Response({'message': 'Book does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-
-    @api_view
-    def get_search_results(self, request):
-        
-        API_KEY = os.environ.get('GOOGLE_API')
-        search = self.request.query_params.get('search', None)
-        
-        URL = f'https://www.googleapis.com/books/v1/volumes?q={search}&key={API_KEY}&maxResults=30'
-
-        r = requests.get(url = URL)
-        
-        data = r.json()
-        
-        return Response(data)
