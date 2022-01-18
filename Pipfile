@@ -12,6 +12,8 @@ django-cors-headers = "*"
 pylint-django = "*"
 gunicorn = "*"
 django-on-heroku = "*"
+requests = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
